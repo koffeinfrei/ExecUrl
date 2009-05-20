@@ -1,0 +1,14 @@
+﻿# Format of this configuration file: <Title>\t<URL>\t[firefox|ie]
+# URL: Must contain the placeholder {0}, where the parameter will be placed
+# If the last part is omitted, the system default browser is used to open the url
+#
+# And in case you wonder why the configuration isn't done nicely with xml or something, the 
+# answer is that xml is massive overhead, and I like to keep things as simple as possible.
+#
+# The entries will be available through global hotkeys according to their order defined herein CTRL + <0-9>
+
+Project view ticket	https://project.gridsoft.org/customers/Parlamentsdienste/Redesign%20Internet/Lists/Problems/DispForm.aspx?ID={0}
+Project edit ticket	https://project.gridsoft.org/customers/Parlamentsdienste/Redesign%20Internet/Lists/Problems/EditForm.aspx?ID={0}	ie
+Google	http://www.google.ch/search?q={0}&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-GB:official&client=firefox-a
+Last.fm Artist	http://www.last.fm/music/{0}
+Wikipedia EN	http://en.wikipedia.org/wiki/{0}

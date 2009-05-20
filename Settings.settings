@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Koffeinfrei.ExecUrl" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="NotificationFadePixels" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="NotificationFadeType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="TimerIntervalNotificationShow" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
+    </Setting>
+    <Setting Name="TimerIntervalNotificationFade" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">70</Value>
+    </Setting>
+    <Setting Name="NotificationTimerInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10800000</Value>
+    </Setting>
+    <Setting Name="UrlParamsFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UrlParams.txt</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
