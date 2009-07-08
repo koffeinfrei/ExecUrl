@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using MouseKeyboardLibrary;
 
 namespace Koffeinfrei.ExecUrl
 {
@@ -32,6 +33,7 @@ namespace Koffeinfrei.ExecUrl
 
         private UrlParams urlParams;
         private int lastSelectedUrlIndex;
+        private KeyboardHook keyboardHook = new KeyboardHook();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainForm"/> class.
@@ -51,11 +53,39 @@ namespace Koffeinfrei.ExecUrl
             urlParams = UrlParams.Load();
 
             InitUrls();
-            InitHotKeys();
+
+            // global hot keys
+            keyboardHook.KeyDown += keyboardHook_KeyDown;
+            keyboardHook.Start();
 
             SetWindowPosition();
             Visible = false;
             Hide();
+        }
+
+        /// <summary>
+        /// Handles the KeyDown event of the global hotkey.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
+        void keyboardHook_KeyDown(object sender, KeyEventArgs e)
+        {
+            // display context menu
+            if (e.Control && e.Shift && e.KeyCode == Keys.OemMinus)
+            {
+                trayMenu.Show(Left + Width, Top + Height);
+                trayMenu.Focus();
+                trayMenu.Items[0].Select();
+            }
+
+            // directly call menu item
+            if (e.Control && 
+                e.KeyCode >= Keys.NumPad0 && e.KeyCode < Keys.NumPad0 + urlParams.Count)
+            {
+                UrlParam urlParam = urlParams[e.KeyValue - (int) Keys.NumPad0];
+                ShowParamDialog(urlParam);
+                e.Handled = true;
+            }
         }
 
         /// <summary>
@@ -167,21 +197,6 @@ namespace Koffeinfrei.ExecUrl
         }
 
         /// <summary>
-        /// Register the global hotkeys.
-        /// </summary>
-        private void InitHotKeys()
-        {
-            GlobalKeyboardHook hook = new GlobalKeyboardHook();
-            for (int i = 0; i < urlParams.Count; ++i)
-            {
-                hook.HookedKeys.Add(Keys.NumPad0 + i); // start at numpad0
-            }
-            //hook.HookedKeys.Add(Keys.NumPad0); // 96
-            hook.KeyDown += Global_KeyDown;
-            hook.CaptureControlKey = true;
-        }
-
-        /// <summary>
         /// Shows the param dialog which allows to enter the parameter for the selected
         /// URL in the <paramref name="urlParam"/> object.
         /// </summary>
@@ -211,18 +226,6 @@ namespace Koffeinfrei.ExecUrl
                     Process.Start(process);
                 }
             }
-        }
-
-        /// <summary>
-        /// Handles the KeyDown event of the global hotkey.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
-        private void Global_KeyDown(object sender, KeyEventArgs e)
-        {
-            UrlParam urlParam = urlParams[e.KeyValue - (int)Keys.NumPad0];
-            ShowParamDialog(urlParam);
-            e.Handled = true;
         }
     }
 }
